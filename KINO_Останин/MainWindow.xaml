@@ -5,8 +5,130 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KINO_Останин"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="471" Width="1046">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="LightGray">
+            <Button x:Name="btnKinoAdd" Content="Добавить кинотеатр" Width="100" Margin="2" Click="btnKinoAdd_Click" FontSize="10" FontFamily="Times New Roman"/>
+            <Button x:Name="btnKinoEdit" Content="Редактировать кинотеатр" Width="118" Margin="2" Click="btnKinoEdit_Click" FontSize="10" FontFamily="Times New Roman"/>
+            <Button x:Name="btnKinoDel" Content="Удалить кинотеатр" Width="100" Margin="2" Click="btnKinoDel_Click" FontSize="10" FontFamily="Times New Roman"/>
+            <Button x:Name="btnKinoRefresh" Content="Обноваит кинотеатр" Width="100" Margin="2" Click="btnKinoRefresh_Click" FontSize="10" FontFamily="Times New Roman"/>
+
+            <Separator Width="20"/>
+            <Button x:Name="btnAfishaAdd" Content="Добавить афишу" Width="100" Margin="2" Click="btnAfishaAdd_Click" FontSize="10" FontFamily="Times New Roman"/>
+            <Button x:Name="btnAfishaEdit" Content="Редактировать афишу" Width="100" Margin="2" Click="btnAfishaEdit_Click" FontSize="10" FontFamily="Times New Roman"/>
+            <Button x:Name="btnAfishaDel" Content="Удалить афишу" Width="100" Margin="2" Click="btnAfishaDel_Click" FontSize="10" FontFamily="Times New Roman"/>
+            <Button x:Name="btnAfishaRefresh" Content="Обновить афишу" Width="100" Margin="2" Click="btnAfishaRefresh_Click" FontSize="10" FontFamily="Times New Roman"/>
+            <Button x:Name="btnBuyTicket" Content="Купить билет" Width="100" Margin="2" Background="LightGreen" Click="btnBuyTicket_Click" FontSize="10" FontFamily="Times New Roman"/>
+        </StackPanel>
+
+        <!-- ОСНОВНОЙ КОНТЕНТ -->
+        <TabControl Grid.Row="1" Margin="5">
+            <!-- Кинотеатры -->
+            <TabItem Header="Кинотеатры">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- ФИЛЬТР КИНОТЕАТРОВ -->
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="5" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="Фильтр кинотеатров" FontWeight="Bold"/>
+                            <WrapPanel>
+                                <TextBlock Text="Название:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterKinoName" Width="150" Margin="5"/>
+
+                                <TextBlock Text="Залы от:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterKinoZalFrom" Width="50" Margin="5"/>
+                                <TextBlock Text="до:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterKinoZalTo" Width="50" Margin="5"/>
+
+                                <TextBlock Text="Места от:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterKinoMestFrom" Width="50" Margin="5"/>
+                                <TextBlock Text="до:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterKinoMestTo" Width="50" Margin="5"/>
+
+                                <Button x:Name="btnFilterKino" Content="Применить фильтр" Margin="5" Padding="5" Click="btnFilterKino_Click"/>
+                                <Button x:Name="btnClearFilterKino" Content="Сброс" Margin="5" Padding="5" Click="btnClearFilterKino_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ТАБЛИЦА -->
+                    <DataGrid x:Name="dgKino" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="50"/>
+                            <DataGridTextColumn Header="Название" Binding="{Binding name}" Width="200"/>
+                            <DataGridTextColumn Header="Залы" Binding="{Binding countzal}" Width="100"/>
+                            <DataGridTextColumn Header="Места" Binding="{Binding count}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- Афиша -->
+            <TabItem Header="Афиша">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="150"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- ФИЛЬТР АФИШИ -->
+                    <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1" Padding="5" Margin="5">
+                        <StackPanel>
+                            <TextBlock Text="Фильтр афиши" FontWeight="Bold"/>
+                            <WrapPanel>
+                                <TextBlock Text="Кинотеатр:" VerticalAlignment="Center" Margin="5"/>
+                                <ComboBox x:Name="filterAfishaKino" Width="150" Margin="5" DisplayMemberPath="name" SelectedValuePath="id"/>
+
+                                <TextBlock Text="Фильм:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterAfishaFilm" Width="150" Margin="5"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <TextBlock Text="Дата от:" VerticalAlignment="Center" Margin="5"/>
+                                <DatePicker x:Name="filterAfishaDateFrom" Width="120" Margin="5"/>
+                                <TextBlock Text="до:" VerticalAlignment="Center" Margin="5"/>
+                                <DatePicker x:Name="filterAfishaDateTo" Width="120" Margin="5"/>
+
+                                <TextBlock Text="Цена от:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterAfishaPriceFrom" Width="80" Margin="5"/>
+                                <TextBlock Text="до:" VerticalAlignment="Center" Margin="5"/>
+                                <TextBox x:Name="filterAfishaPriceTo" Width="80" Margin="5"/>
+                            </WrapPanel>
+                            <WrapPanel>
+                                <Button x:Name="btnFilterAfisha" Content="Применить фильтр" Margin="5" Padding="5" Click="btnFilterAfisha_Click"/>
+                                <Button x:Name="btnClearFilterAfisha" Content="Сброс" Margin="5" Padding="5" Click="btnClearFilterAfisha_Click"/>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ТАБЛИЦА -->
+                    <DataGrid x:Name="dgAfisha" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding id}" Width="50"/>
+                            <DataGridTextColumn Header="Кинотеатр" Binding="{Binding KinoteatrName}" Width="150"/>
+                            <DataGridTextColumn Header="Фильм" Binding="{Binding name}" Width="200"/>
+                            <DataGridTextColumn Header="Время" Binding="{Binding time}" Width="150"/>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding price}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Статус бар -->
+        <StatusBar Grid.Row="2" Background="LightGray">
+            <StatusBarItem>
+                <TextBlock x:Name="txtStatus" Text="Готов"/>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
