@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using Kino_Останин.Classes.Common;
-using KINO_Останин.Model;
+using Kino_Останин.Model;
 
 namespace Kino_Останин.Classes
 {
